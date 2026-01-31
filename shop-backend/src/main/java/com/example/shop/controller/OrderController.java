@@ -25,6 +25,67 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Instant;
 
-/**
- * MAYANK
- */
+@RestController
+@RequestMapping("/api/orders")
+public class OrderController {
+
+    private final OrderService orderService;
+
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
+    }
+
+    @PostMapping
+    public ResponseEntity<OrderResponse> placeOrder(
+            @AuthenticationPrincipal UserDetails principal,
+            @Valid @RequestBody PlaceOrderRequest request
+    ) {
+        OrderResponse order = orderService.placeOrder(principal.getUsername(), request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(order);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<OrderResponse> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(orderService.getById(id));
+    }
+
+    @GetMapping("/my-orders")
+    public ResponseEntity<Page<OrderResponse>> getMyOrders(
+            @AuthenticationPrincipal UserDetails principal,
+            @PageableDefault(size = 20, sort = "createdAt") Pageable pageable
+    ) {
+        Page<OrderResponse> orders = orderService.getUserOrders(principal.getUsername(), pageable);
+        return ResponseEntity.ok(orders);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping
+    public ResponseEntity<Page<OrderResponse>> getAllOrders(
+            @RequestParam(required = false) OrderStatus status,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Instant startDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Instant endDate,
+            @PageableDefault(size = 20, sort = "createdAt") Pageable pageable
+    ) {
+        Page<OrderResponse> orders = orderService.getAllOrders(status, startDate, endDate, pageable);
+        return ResponseEntity.ok(orders);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{id}/status")
+    public ResponseEntity<OrderResponse> updateOrderStatus(
+            @PathVariable Long id,
+            @RequestParam OrderStatus status
+    ) {
+        OrderResponse order = orderService.updateOrderStatus(id, status);
+        return ResponseEntity.ok(order);
+    }
+
+    @PutMapping("/{id}/cancel")
+    public ResponseEntity<OrderResponse> cancelOrder(
+            @AuthenticationPrincipal UserDetails principal,
+            @PathVariable Long id
+    ) {
+        OrderResponse order = orderService.cancelOrder(principal.getUsername(), id);
+        return ResponseEntity.ok(order);
+    }
+}
