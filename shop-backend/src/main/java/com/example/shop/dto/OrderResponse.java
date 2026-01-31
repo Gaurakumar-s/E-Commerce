@@ -10,7 +10,18 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
-/**
- *MAYANK
- *
- */
+@Getter
+@Setter
+@Builder
+public class OrderResponse {
+
+    private Long id;
+    private Long userId;
+    private BigDecimal totalAmount;
+    private OrderStatus status;
+    private PaymentStatus paymentStatus;
+    private String paymentReference;
+    private Instant createdAt;
+    private List<OrderItemResponse> items;
+}
+
