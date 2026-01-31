@@ -6,6 +6,13 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
-/**
- *ASHMIT
- */
+@Getter
+@Setter
+@Builder
+public class TopProductResponse {
+
+    private Long productId;
+    private String productName;
+    private Long totalQuantitySold;
+    private BigDecimal totalRevenue;
+}
