@@ -17,6 +17,54 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- *   Prince
- */
+@RestController
+@RequestMapping("/api/cart")
+public class CartController {
+
+    private final CartService cartService;
+
+    public CartController(CartService cartService) {
+        this.cartService = cartService;
+    }
+
+    @GetMapping
+    public ResponseEntity<CartResponse> getCart(@AuthenticationPrincipal UserDetails principal) {
+        CartResponse cart = cartService.getOrCreateCart(principal.getUsername());
+        return ResponseEntity.ok(cart);
+    }
+
+    @PostMapping("/items")
+    public ResponseEntity<CartResponse> addItem(
+            @AuthenticationPrincipal UserDetails principal,
+            @Valid @RequestBody AddCartItemRequest request
+    ) {
+        CartResponse cart = cartService.addItem(principal.getUsername(), request);
+        return ResponseEntity.ok(cart);
+    }
+
+    @PutMapping("/items/{itemId}")
+    public ResponseEntity<CartResponse> updateItem(
+            @AuthenticationPrincipal UserDetails principal,
+            @PathVariable Long itemId,
+            @Valid @RequestBody UpdateCartItemRequest request
+    ) {
+        CartResponse cart = cartService.updateItem(principal.getUsername(), itemId, request);
+        return ResponseEntity.ok(cart);
+    }
+
+    @DeleteMapping("/items/{itemId}")
+    public ResponseEntity<CartResponse> removeItem(
+            @AuthenticationPrincipal UserDetails principal,
+            @PathVariable Long itemId
+    ) {
+        CartResponse cart = cartService.removeItem(principal.getUsername(), itemId);
+        return ResponseEntity.ok(cart);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<CartResponse> clearCart(@AuthenticationPrincipal UserDetails principal) {
+        CartResponse cart = cartService.clearCart(principal.getUsername());
+        return ResponseEntity.ok(cart);
+    }
+}
+
