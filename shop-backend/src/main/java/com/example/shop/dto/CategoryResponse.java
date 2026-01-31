@@ -6,7 +6,16 @@ import lombok.Setter;
 
 import java.time.Instant;
 
-/**
- * ASHMIT
- *
- */
+@Getter
+@Setter
+@Builder
+public class CategoryResponse {
+
+    private Long id;
+    private String name;
+    private Long parentCategoryId;
+    private boolean active;
+    private Instant createdAt;
+    private Instant updatedAt;
+}
+
