@@ -24,6 +24,77 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 
-/**
- * RATNESH
- */
+@RestController
+@RequestMapping("/api/products")
+public class ProductController {
+
+    private final ProductService productService;
+    private final FileStorageService fileStorageService;
+
+    public ProductController(ProductService productService, FileStorageService fileStorageService) {
+        this.productService = productService;
+        this.fileStorageService = fileStorageService;
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping
+    public ResponseEntity<ProductResponse> create(@Valid @RequestBody ProductRequest request) {
+        ProductResponse response = productService.create(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductResponse> update(
+            @PathVariable Long id,
+            @Valid @RequestBody ProductRequest request
+    ) {
+        ProductResponse response = productService.update(id, request);
+        return ResponseEntity.ok(response);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        productService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/{id}/image")
+    public ResponseEntity<ProductResponse> uploadImage(
+            @PathVariable Long id,
+            @RequestParam("file") MultipartFile file
+    ) {
+        String imageUrl = fileStorageService.storeFile(file);
+        ProductResponse response = productService.updateImage(id, imageUrl);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductResponse> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(productService.getById(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<ProductResponse>> search(
+            @RequestParam(required = false) Long categoryId,
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) BigDecimal minPrice,
+            @RequestParam(required = false) BigDecimal maxPrice,
+            @RequestParam(required = false) Boolean active,
+            @RequestParam(required = false) Boolean inStock,
+            @PageableDefault(size = 20, sort = "createdAt") Pageable pageable
+    ) {
+        Page<ProductResponse> page = productService.search(
+                categoryId,
+                search,
+                minPrice,
+                maxPrice,
+                active,
+                inStock,
+                pageable
+        );
+        return ResponseEntity.ok(page);
+    }
+}
