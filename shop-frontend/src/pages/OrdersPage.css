@@ -1,0 +1,127 @@
+.orders-page {
+    animation: fadeIn 0.5s ease;
+}
+
+.orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.order-card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    transition: all var(--transition-normal);
+}
+
+.order-card:hover {
+    border-color: var(--primary);
+    transform: translateX(4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-id {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.order-id .label,
+.order-date .label,
+.order-total .label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.order-id .value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.order-body {
+    padding: 12px 0;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.order-items-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.item-preview {
+    padding: 6px 12px;
+    background: var(--bg-tertiary);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.more-items {
+    padding: 6px 12px;
+    color: var(--primary-light);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.order-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.order-date,
+.order-total {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.order-date .value {
+    color: var(--text-secondary);
+}
+
+.order-total .value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary-light);
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-color);
+}
+
+.pagination-info {
+    color: var(--text-secondary);
+}
+
+@media (max-width: 480px) {
+    .order-footer {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+    }
+}

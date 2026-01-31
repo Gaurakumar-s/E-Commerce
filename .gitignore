@@ -1,0 +1,66 @@
+# --- General ---
+.DS_Store
+Thumbs.db
+*.log
+tmp/
+temp/
+*~
+*.swp
+
+# --- IDEs ---
+.idea/
+.vscode/
+*.iml
+*.sublime-*
+*.classpath
+*.project
+*.settings/
+.springBeans
+
+# --- Backend (Spring Boot / Java) ---
+shop-backend/target/
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# H2 Database files
+*.mv.db
+*.trace.db
+
+# Logs
+logs/
+*.log.gz
+
+# Uploads
+uploads/
+shop-backend/uploads/
+
+# --- Frontend (Node / React) ---
+shop-frontend/node_modules/
+node_modules/
+shop-frontend/dist/
+dist/
+shop-frontend/build/
+build/
+shop-frontend/coverage/
+coverage/
+.vite/
+*.local
+
+# --- Environment Variables & Secrets ---
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# --- OS Specific ---
+.AppleDouble
+.LSOverride
+Icon
+
+
+# --- Misc ---
+output/
+build_output*.txt
