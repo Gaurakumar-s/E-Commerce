@@ -4,6 +4,16 @@
 
 A production-ready REST API for e-commerce applications with JWT authentication, cart management, order processing, and admin analytics.
 
+## ✨ Frontend
+<img width="1600" height="828" alt="image" src="https://github.com/user-attachments/assets/75c48a91-c246-45eb-8aac-563b43e30355" />
+<img width="1600" height="828" alt="image" src="https://github.com/user-attachments/assets/477f6061-f740-4ad2-9a00-1b79b153cca4" />
+<img width="1600" height="828" alt="image" src="https://github.com/user-attachments/assets/2c7f1119-6ab2-4e85-8e6f-64373ed7ecaa" />
+<img width="1600" height="828" alt="image" src="https://github.com/user-attachments/assets/12519ad8-42bd-4bf8-8e6c-e395d5600e09" />
+
+
+
+
+
 ## ✨ Features
 
 - 🔐 **JWT Authentication** - Secure, stateless auth with role-based access
